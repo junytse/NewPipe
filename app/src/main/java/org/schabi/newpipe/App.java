@@ -12,6 +12,7 @@ import androidx.preference.PreferenceManager;
 
 import com.jakewharton.processphoenix.ProcessPhoenix;
 
+import okhttp3.OkHttpClient;
 import org.acra.ACRA;
 import org.acra.config.CoreConfigurationBuilder;
 import org.schabi.newpipe.error.ReCaptchaActivity;
@@ -20,6 +21,7 @@ import org.schabi.newpipe.extractor.downloader.Downloader;
 import org.schabi.newpipe.ktx.ExceptionUtils;
 import org.schabi.newpipe.settings.NewPipeSettings;
 import org.schabi.newpipe.util.Localization;
+import org.schabi.newpipe.util.OkHttpHelper;
 import org.schabi.newpipe.util.image.ImageStrategy;
 import org.schabi.newpipe.util.image.PicassoHelper;
 import org.schabi.newpipe.util.ServiceHelper;
@@ -117,7 +119,11 @@ public class App extends Application {
     }
 
     protected Downloader getDownloader() {
-        final DownloaderImpl downloader = DownloaderImpl.init(null);
+        final DownloaderImpl downloader = DownloaderImpl.init(
+                new OkHttpClient.Builder()
+                        .proxy(OkHttpHelper.getProxy(this))
+        );
+
         setCookiesToDownloader(downloader);
         return downloader;
     }

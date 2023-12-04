@@ -54,6 +54,7 @@ import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.NoRouteToHostException;
+import java.net.Proxy;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -97,6 +98,7 @@ public final class YoutubeHttpDataSource extends BaseDataSource implements HttpD
 
         private boolean rangeParameterEnabled;
         private boolean rnParameterEnabled;
+        private Proxy proxy;
 
         /**
          * Creates an instance.
@@ -105,6 +107,7 @@ public final class YoutubeHttpDataSource extends BaseDataSource implements HttpD
             defaultRequestProperties = new RequestProperties();
             connectTimeoutMs = DEFAULT_CONNECT_TIMEOUT_MILLIS;
             readTimeoutMs = DEFAULT_READ_TIMEOUT_MILLIS;
+            proxy = Proxy.NO_PROXY;
         }
 
         @NonNull
@@ -243,6 +246,11 @@ public final class YoutubeHttpDataSource extends BaseDataSource implements HttpD
             return this;
         }
 
+        public Factory setProxy(final Proxy newPproxy) {
+            this.proxy = newPproxy;
+            return this;
+        }
+
         @NonNull
         @Override
         public YoutubeHttpDataSource createDataSource() {
@@ -254,6 +262,7 @@ public final class YoutubeHttpDataSource extends BaseDataSource implements HttpD
                     rnParameterEnabled,
                     defaultRequestProperties,
                     contentTypePredicate,
+                    proxy,
                     keepPostFor302Redirects);
             if (transferListener != null) {
                 dataSource.addTransferListener(transferListener);
@@ -296,6 +305,7 @@ public final class YoutubeHttpDataSource extends BaseDataSource implements HttpD
     private long bytesRead;
 
     private long requestNumber;
+    private Proxy proxy;
 
     @SuppressWarnings("checkstyle:ParameterNumber")
     private YoutubeHttpDataSource(final int connectTimeoutMillis,
@@ -305,6 +315,7 @@ public final class YoutubeHttpDataSource extends BaseDataSource implements HttpD
                                   final boolean rnParameterEnabled,
                                   @Nullable final RequestProperties defaultRequestProperties,
                                   @Nullable final Predicate<String> contentTypePredicate,
+                                  final Proxy proxy,
                                   final boolean keepPostFor302Redirects) {
         super(true);
         this.connectTimeoutMillis = connectTimeoutMillis;
@@ -317,6 +328,7 @@ public final class YoutubeHttpDataSource extends BaseDataSource implements HttpD
         this.requestProperties = new RequestProperties();
         this.keepPostFor302Redirects = keepPostFor302Redirects;
         this.requestNumber = 0;
+        this.proxy = proxy;
     }
 
     @Override
@@ -713,7 +725,7 @@ public final class YoutubeHttpDataSource extends BaseDataSource implements HttpD
      * @return an {@link HttpURLConnection} created with the {@code url}
      */
     private HttpURLConnection openConnection(@NonNull final URL url) throws IOException {
-        return (HttpURLConnection) url.openConnection();
+        return (HttpURLConnection) url.openConnection(proxy);
     }
 
     /**

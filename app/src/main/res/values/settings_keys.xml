@@ -424,6 +424,26 @@
     <string name="settings_file_replacement_character_key">file_replacement_character</string>
     <string name="settings_file_replacement_character_default_value">_</string>
 
+    <!-- Proxy -->
+    <string name="proxy_pref_screen_key">proxy_pref_screen_key</string>
+    <string name="settings_proxy_protocol_key">proxy_protocol</string>
+    <string-array name="settings_proxy_protocol_name">
+        <item>@string/settings_proxy_protocol_name_direct</item>
+        <item>@string/settings_proxy_protocol_name_http</item>
+        <item>@string/settings_proxy_protocol_name_socks</item>
+    </string-array>
+    <string name="settings_proxy_protocol_value_direct">PROXY_PROTOCOL_DIRECT</string>
+    <string name="settings_proxy_protocol_value_http">PROXY_PROTOCOL_HTTP</string>
+    <string name="settings_proxy_protocol_value_socks">PROXY_PROTOCOL_SOCKS</string>
+    <string-array name="settings_proxy_protocol">
+        <item>@string/settings_proxy_protocol_value_direct</item>
+        <item>@string/settings_proxy_protocol_value_http</item>
+        <item>@string/settings_proxy_protocol_value_socks</item>
+    </string-array>
+    <string name="settings_proxy_server_key">proxy_server</string>
+    <string name="settings_proxy_server_default_value">127.0.0.1</string>
+    <string name="settings_proxy_port_key">proxy_port</string>
+    <string name="settings_proxy_port_default_value">8080</string>
 
     <string name="charset_letters_and_digits_value">CHARSET_LETTERS_AND_DIGITS</string>
     <string name="charset_most_special_value">CHARSET_MOST_SPECIAL</string>

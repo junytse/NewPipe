@@ -356,6 +356,14 @@
     <string name="settings_file_replacement_character_title">Replacement character</string>
     <string name="charset_letters_and_digits">Letters and digits</string>
     <string name="charset_most_special_characters">Most special characters</string>
+    <!-- Proxy -->
+    <string name="settings_category_proxy_title">Proxy (Kill and relaunch to take effect)</string>
+    <string name="settings_proxy_protocol_title">Proxy Type</string>
+    <string name="settings_proxy_protocol_name_direct">No Proxy</string>
+    <string name="settings_proxy_protocol_name_http">HTTP</string>
+    <string name="settings_proxy_protocol_name_socks">SOCKS</string>
+    <string name="settings_proxy_server_title">Proxy Server</string>
+    <string name="settings_proxy_port_title">Proxy Port</string>
     <!-- About -->
     <string name="title_activity_about">About NewPipe</string>
     <string name="title_licenses">Third-party Licenses</string>

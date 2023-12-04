@@ -17,6 +17,7 @@ import java.io.InterruptedIOException;
 import java.io.Serializable;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
+import java.net.Proxy;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -146,6 +147,7 @@ public class DownloadMission extends Mission {
 
     private transient long writingToFileNext;
     private transient volatile boolean writingToFile;
+    public Proxy proxy;
 
     final Object LOCK = new Lock();
 
@@ -163,6 +165,7 @@ public class DownloadMission extends Mission {
         this.maxRetry = 3;
         this.storage = storage;
         this.psAlgorithm = psInstance;
+        this.proxy = Proxy.NO_PROXY;
 
         if (DEBUG && psInstance == null && urls.length > 1) {
             Log.w(TAG, "mission created with multiple urls ¿missing post-processing algorithm?");
@@ -219,7 +222,7 @@ public class DownloadMission extends Mission {
     }
 
     HttpURLConnection openConnection(String url, boolean headRequest, long rangeStart, long rangeEnd) throws IOException {
-        HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+        HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection(proxy);
         conn.setInstanceFollowRedirects(true);
         conn.setRequestProperty("User-Agent", DownloaderImpl.USER_AGENT);
         conn.setRequestProperty("Accept", "*/*");
